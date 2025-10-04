@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerControls",
     "maps": [
         {
@@ -36,6 +37,24 @@
                     "name": "Play",
                     "type": "Button",
                     "id": "86b9dc0d-ea15-414a-80a2-a0ef34792db2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Stop",
+                    "type": "Button",
+                    "id": "cc5c3b1a-ae74-4a59-9dc0-922dfae930e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "e2bd13f6-e17b-4707-9168-6ca116a3cd11",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -139,6 +158,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Play",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18159621-d7f1-483e-bed5-98c9d1cf1d5d",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c69655f0-a4ea-40e3-a39a-e0bb0d79ea55",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -17,10 +17,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 lookInput;
     private float xRotation = 0f;
-    VideoPlayer videoPlayer;
+
+    [SerializeField] VideoPlayer videoPlayer;  // make it assignable
+
+  
     void Start()
     {
         controller = GetComponent<CharacterController>();
+       
     }
 
 
@@ -50,23 +54,67 @@ public class PlayerController : MonoBehaviour
 
     public void Play(InputAction.CallbackContext context)
     {
-        VideoPlayer videoPlayer;
+        
 
-        if (context.performed)
+        if (context.performed && videoPlayer != null)
         {
-            videoPlayer = GetComponent<VideoPlayer>();
-            Debug.Log(" we are supposed to Play");
+            // Stop the video first
+            if (videoPlayer.isPlaying)
+                videoPlayer.Stop();
 
+            // Reset to the start
+            videoPlayer.time = 0;
+
+            // Prepare and play
+            if (!videoPlayer.isPrepared)
+            {
+                videoPlayer.prepareCompleted += OnPrepareCompleted;
+                videoPlayer.Prepare();
+            }
+            else
+            {
+                videoPlayer.Play();
+            }
         }
+    }
+        public void Stop(InputAction.CallbackContext context)
+    {
+        if (context.performed && videoPlayer != null && videoPlayer.isPlaying)
+        {
+            Debug.Log ("sttop video");
+            videoPlayer.Pause();
+        }
+
+
+    }
+        public void Skip(InputAction.CallbackContext context)
+    {
+
+        if (context.performed && videoPlayer != null)
+        {
+            double newTime = videoPlayer.time + 10.0; // skip forward 10 seconds
+            if (newTime < videoPlayer.length)
+            {
+                videoPlayer.time = newTime;
+            }
+            else
+            {
+                videoPlayer.time = videoPlayer.length; // go to end if exceeding length
+            }
+        }
+
+
+    }
+
+    void OnPrepareCompleted(VideoPlayer vp)
+    {
+        Debug.Log("Video is prepared and will start playing.");
+        vp.Play();
     }
 
     void Update()
     {
-        
-        if (videoPlayer.isPlaying == false)
-        {
-            videoPlayer.Play();
-        }
+      
         // ---------- LOOK ----------
         float mouseX = lookInput.x * sensitivity;   // don’t multiply by deltaTime here
         float mouseY = lookInput.y * sensitivity;
@@ -78,7 +126,7 @@ public class PlayerController : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        Debug.Log($"Look Input: {lookInput}");
+      
 
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         controller.Move(move * speed * Time.deltaTime);
