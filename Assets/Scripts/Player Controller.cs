@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 lookInput;
     private float xRotation = 0f;
-
+    VideoPlayer videoPlayer;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -41,16 +42,32 @@ public class PlayerController : MonoBehaviour
     }
     public void Look(InputAction.CallbackContext context)
     {
-    
+
         lookInput = context.ReadValue<Vector2>();
 
-        Debug.Log("Look input: " );
+
     }
+
+    public void Play(InputAction.CallbackContext context)
+    {
+        VideoPlayer videoPlayer;
+
+        if (context.performed)
+        {
+            videoPlayer = GetComponent<VideoPlayer>();
+            Debug.Log(" we are supposed to Play");
+
+        }
+    }
+
     void Update()
     {
-
-    
-            // ---------- LOOK ----------
+        
+        if (videoPlayer.isPlaying == false)
+        {
+            videoPlayer.Play();
+        }
+        // ---------- LOOK ----------
         float mouseX = lookInput.x * sensitivity;   // don’t multiply by deltaTime here
         float mouseY = lookInput.y * sensitivity;
 
@@ -63,8 +80,8 @@ public class PlayerController : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         Debug.Log($"Look Input: {lookInput}");
 
-      Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
-      controller.Move(move * speed * Time.deltaTime);
+        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        controller.Move(move * speed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
