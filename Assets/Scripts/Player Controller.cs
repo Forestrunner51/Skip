@@ -77,9 +77,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-        public void Stop(InputAction.CallbackContext context)
+    public void Stop(InputAction.CallbackContext context)
     {
-        if (context.performed && videoPlayer != null && videoPlayer.isPlaying)
+        if (context.performed && videoPlayer != null)
         {
             Debug.Log ("sttop video");
             videoPlayer.Pause();
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
 
     }
-        public void Skip(InputAction.CallbackContext context)
+    public void Skip(InputAction.CallbackContext context)
     {
 
         if (context.performed && videoPlayer != null)
