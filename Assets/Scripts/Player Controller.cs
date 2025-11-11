@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float sensitivity = 1f;
     public Transform playerCamera;
 
+
     private Vector2 lookInput;
     private float xRotation = 0f;
 
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        transform.position = new Vector3(10, 5, 10);
        
     }
 
